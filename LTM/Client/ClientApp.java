@@ -5,11 +5,6 @@
  */
 package LTM.Client;
 
-import java.io.DataInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
 import javax.swing.JFileChooser;
 
 /**
@@ -22,7 +17,7 @@ public class ClientApp extends javax.swing.JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    ClientController clientModel;
+    ClientController clientController;
 
     /**
      * Creates new form ClientView
@@ -107,77 +102,72 @@ public class ClientApp extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Server:");
 
-        jLabel4.setText("Phạm Mạnh Dũng - 17T3 - 102170149");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-                .createSequentialGroup().addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-                        .createSequentialGroup()
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1)
-                                .addGroup(layout.createSequentialGroup().addGroup(layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(SubTitle)
-                                        .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 397,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup().addGap(1, 1, 1).addComponent(jLabel3)))
-                                        .addGap(0, 331, Short.MAX_VALUE)))
-                        .addContainerGap())
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2).addComponent(jLabel1).addComponent(browseBtn))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(serverAddressTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(portTextField, javax.swing.GroupLayout.Alignment.LEADING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
-                                        .addComponent(filePathTextField))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(OpenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(SendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28))))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4).addGap(20, 20, 20)));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-                .createSequentialGroup().addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(layout
-                        .createSequentialGroup().addComponent(Title)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(SubTitle)
+                            .addComponent(SubTitle)
+                            .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel3)))
+                        .addContainerGap(341, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(browseBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(serverAddressTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(portTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                            .addComponent(filePathTextField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(OpenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(10, 10, 10))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Title)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SubTitle)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(filePathTextField)
-                                .addComponent(browseBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                            .addComponent(filePathTextField)
+                            .addComponent(browseBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(serverAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 27,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2))
+                            .addComponent(serverAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1))
+                            .addComponent(portTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(25, 25, 25))
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(SendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(OpenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)))
-                .addComponent(jLabel3).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(jLabel4)
-                .addContainerGap(18, Short.MAX_VALUE)));
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SendBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(OpenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>
@@ -187,7 +177,7 @@ public class ClientApp extends javax.swing.JFrame {
     }
 
     private void OpenBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        clientController.openFile();
     }
 
     private void SendBtnActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException {
@@ -196,9 +186,10 @@ public class ClientApp extends javax.swing.JFrame {
         String sourceFilePath = filePathTextField.getText().trim();
 
         if (hostAddress != "" && sourceFilePath != "") {
-            clientModel = new ClientController(hostAddress, port, responseTextView);
-            clientModel.connectServer();
-            clientModel.sendFile(sourceFilePath);
+            clientController = new ClientController(hostAddress, port, responseTextView);
+            clientController.connectServer();
+            clientController.sendFile(sourceFilePath);
+            clientController.closeSocket();
         }
     }
 

@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.awt.Desktop;
 import javax.swing.JTextArea;
 
 import LTM.Model.FileModel;
@@ -39,7 +39,7 @@ public class ClientController {
     public void connectServer() {
         try {
             client = new Socket(host, port);
-            textAreaLog.append("connected to server.\n");
+            textAreaLog.append("Đã kết nối đến server.\n");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -48,54 +48,67 @@ public class ClientController {
     }
  
 
-    public void sendFile(String sourceFilePath) throws ClassNotFoundException {
+    public void sendFile(String sourceFilePath) {
         DataOutputStream outToServer = null;
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null, ois2 = null;
-        try{
-            outToServer = new DataOutputStream(client.getOutputStream());
-            outToServer.writeUTF("Hello from " + client.getLocalSocketAddress());
-   
-            // get file info
-            FileModel fileInfo = getFileInfo(sourceFilePath);
-   
-            // send file
-            oos = new ObjectOutputStream(client.getOutputStream());
-            oos.writeObject(fileInfo);
-        }catch (IOException ex) {
-            ex.printStackTrace();
-        } 
-         // make greeting
-         
-        while(true){
-            try {
-                ois = new ObjectInputStream(client.getInputStream());
-                FileModel receivedFile = (FileModel) ois.readObject();
-                if (receivedFile != null) {
-                    String path = new File("").getAbsolutePath();
-                    path = path + "/LTM/Client/DANHSACHPHANCONG.XLSX";
-                    createFile(receivedFile, path);
-                    break;
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } 
-        }
+        textAreaLog.append("Đang chờ kết quả xử lý từ Server.\n");
 
-        while(true){
-            try {
-                ois2 = new ObjectInputStream(client.getInputStream());
-                FileModel receivedFile = (FileModel) ois2.readObject();
-                if (receivedFile != null) {
-                    String path = new File("").getAbsolutePath();
-                    path = path + "/LTM/Client/DANHSACHGIAMSAT.XLSX";
-                    createFile(receivedFile, path);
-                    break;
-                }
-            } catch (IOException ex) {
+        try{
+            try{
+                outToServer = new DataOutputStream(client.getOutputStream());
+                outToServer.writeUTF("Hello from " + client.getLocalSocketAddress());
+       
+                // get file info
+                FileModel fileInfo = getFileInfo(sourceFilePath);
+       
+                // send file
+                oos = new ObjectOutputStream(client.getOutputStream());
+                oos.writeObject(fileInfo);
+            }catch (IOException ex) {
                 ex.printStackTrace();
             } 
+             // make greeting
+             
+             
+            while(true){
+                try {
+                    ois = new ObjectInputStream(client.getInputStream());
+                    FileModel receivedFile = (FileModel) ois.readObject();
+                    if (receivedFile != null) {
+                        String path = new File("").getAbsolutePath();
+                        path = path + "/LTM/Client/DANHSACHPHANCONG.XLSX";
+                        createFile(receivedFile, path);
+                        break;
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+            }
+    
+            while(true){
+                try {
+                    ois2 = new ObjectInputStream(client.getInputStream());
+                    FileModel receivedFile = (FileModel) ois2.readObject();
+                    if (receivedFile != null) {
+                        String path = new File("").getAbsolutePath();
+                        path = path + "/LTM/Client/DANHSACHGIAMSAT.XLSX";
+                        createFile(receivedFile, path);
+                        break;
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+            }
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }finally{
+            textAreaLog.append("Đã nhận được kết quả từ Server.\n");
+            closeStream(ois);
+            closeStream(ois2);
+            closeStream(oos);
         }
+        
         
     }
 
@@ -169,5 +182,27 @@ public class ClientController {
             closeStream(bos);
         }
         return true;
+    }
+
+    public void openFile(){
+        String path = new File("").getAbsolutePath();
+        path = path + "/LTM/Client/DANHSACHPHANCONG.XLSX";
+        File file = new File(path);
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        path = new File("").getAbsolutePath();
+        path = path + "/LTM/Client/DANHSACHGIAMSAT.XLSX";
+        file = new File(path);
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
